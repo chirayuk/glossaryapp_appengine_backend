@@ -1,0 +1,36 @@
+application: ng-codelab
+version: alpha
+runtime: python27
+threadsafe: true
+api_version: 1
+
+
+libraries:
+- name: webapp2
+  version: latest
+
+
+builtins:
+# Enables Appstats at /_ah/stats/ when you enable the event recorder.
+# Refer appengine_config.py for the wsgi middleware that enables the event
+# recorder and
+# https://developers.google.com/appengine/docs/python/tools/appengineconfig
+- appstats: on
+- default: on
+
+
+handlers:
+- url: /favicon.ico
+  static_files: static/favicon.ico
+  upload: static/favicon.ico
+
+- url: (/|/index.html)
+  static_files: static/index.html
+  upload: static/index.html
+
+- url: /api/.*
+  script: app.wsgi_app
+
+- url: /static/(.*\.(js|css|html))
+  static_files: static/\1
+  upload: static/(.*\.(js|css|html))
